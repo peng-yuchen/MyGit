@@ -15,9 +15,10 @@ public class JsonController {
     private FoodConfig foodConfig;
     @RequestMapping("json")
     public Food json(){
-        Food food = new Food();
-        food.setRice(foodConfig.getRice());
-        food.setMeat(foodConfig.getMeat());
+        Food food = new Food(foodConfig.getRice(),foodConfig.getMeat(),foodConfig.getSauce());
+//        food.setRice(foodConfig.getRice());
+//        food.setMeat(foodConfig.getMeat());
+//        food.setSauce(foodConfig.getSauce());
         return food;
     }
 }

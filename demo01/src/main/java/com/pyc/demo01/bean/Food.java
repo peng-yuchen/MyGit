@@ -1,22 +1,13 @@
 package com.pyc.demo01.bean;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+
+@Data
+@AllArgsConstructor
 public class Food {
     private String rice;
     private String meat;
+    private String[] sauce;
 
-    public String getRice() {
-        return rice;
-    }
-
-    public void setRice(String rice) {
-        this.rice = rice;
-    }
-
-    public String getMeat() {
-        return meat;
-    }
-
-    public void setMeat(String meat) {
-        this.meat = meat;
-    }
 }
