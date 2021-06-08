@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+         http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!-- 开启请求映射的注解编程，对应@RequestMapping,@ResponseBody-->
+    <mvc:annotation-driven/>
+    <!-- 扫描bean， 告诉springMVC,com.cc包里面的类是处理请求的-->
+    <context:component-scan base-package="com.pyc.controller"/>
+
+    <!-- 配置视图jsp 显示ViewResolver -->
+    <bean
+            class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="viewClass"
+                  value="org.springframework.web.servlet.view.JstlView" />
+        <property name="prefix" value="/WEB-INF/jsp/" />
+        <property name="suffix" value=".jsp" />
+    </bean>
+
+    <!--mvc作文件上传的一些处理，配置一个组件（文件上传处理器）
+    id="multipartResolver"(固定写法)
+    -->
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="defaultEncoding" value="utf-8"></property>
+        <property name="maxUploadSize" value="5000000"></property>
+        <property name="maxUploadSizePerFile" value="1000000"></property>
+    </bean>
+</beans>

@@ -1,0 +1,26 @@
+server:
+ port: 8899
+
+spring:
+  mvc:
+    view:
+      prefix: /templates/
+      suffix: .html
+
+food:
+ rice: 拌饭
+ meat: 烤肉
+ sauce:
+     - 麻辣
+     - 清淡
+
+#加盐值
+
+jasypt:
+  encryptor:
+    password: 111@!#
+#解密
+info:
+  username: ENC(aT+5K4IBdxr3wFaZWkeP5Q==)
+  password: ENC(blmVlF9+G9YnoO4ZXZhYvA==)
+

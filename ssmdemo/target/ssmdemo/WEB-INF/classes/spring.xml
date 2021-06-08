@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context-4.2.xsd
+    http://www.springframework.org/schema/aop
+    http://www.springframework.org/schema/aop/spring-aop-4.2.xsd
+    http://www.springframework.org/schema/tx
+    http://www.springframework.org/schema/tx/spring-tx-4.2.xsd">
+
+
+<!--    1,开启IOC与DI的注解编程，对应@Controller,@Autowired,指定对应组件包-->
+    <context:component-scan base-package="com.pyc"></context:component-scan>
+
+
+<!--    <bean id="myFood" class="com.pyc.bean.Food">-->
+<!--        <property name="rice" value="米饭"></property>-->
+<!--    </bean>-->
+<!--    <bean id="service" class="com.pyc.service.Service">-->
+<!--        <property name="food" ref="myFood"></property>-->
+<!--    </bean>-->
+    <!--指定数据源位置，读取properties-->
+    <context:property-placeholder location="classpath:db.properties"></context:property-placeholder>
+    <!--配置数据源，使用ali连接池-->
+    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource">
+        <property name="driverClassName" value="${db.driverClassName}"></property>
+        <property name="url" value="${db.url}"></property>
+        <property name="username" value="${db.username}"></property>
+        <property name="password" value="${db.password}"></property>
+    </bean>
+
+    <!--配置工厂,获取sqlSessionFactory-->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"></property>
+        <property name="typeAliasesPackage" value="com.pyc.bean"></property>
+        <property name="configLocation" value="classpath:mybatis.xml"></property>
+    </bean>
+    <!--配置事务,搞一个事务管理者-->
+    <bean id="manager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"></property>
+    </bean>
+    <!--事务管理策略-->
+    <tx:advice id="txAdvice" transaction-manager="manager">
+        <tx:attributes>
+            <!-- 传播行为 -->
+            <tx:method name="save*" isolation="READ_COMMITTED" propagation="REQUIRED" />
+            <tx:method name="insert*" propagation="REQUIRED" />
+            <tx:method name="add*" propagation="REQUIRED" />
+            <tx:method name="create*" propagation="REQUIRED" />
+            <tx:method name="delete*" propagation="REQUIRED" />
+            <tx:method name="update*" propagation="REQUIRED" />
+            <tx:method name="find*" propagation="SUPPORTS" read-only="true" />
+            <tx:method name="select*" propagation="SUPPORTS" read-only="true" />
+            <tx:method name="get*" propagation="SUPPORTS" read-only="true" />
+        </tx:attributes>
+    </tx:advice>
+    <!-- aop实现事务管理切入点 -->
+    <aop:config>
+        <aop:advisor advice-ref="txAdvice" pointcut="execution (* com.pyc.dao.*.*(..))"/>
+    </aop:config>
+
+
+
+    <!--声明以注解的方式配置spring 的事物-->
+<!--    <tx:annotation-driven transaction-manager="transactionManager"></tx:annotation-driven>-->
+
+</beans>

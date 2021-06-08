@@ -1,0 +1,23 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="testssm:war exploded">
+    <output-path>$PROJECT_DIR$/testssm/target/testssm</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <exploded>true</exploded>
+        <module>testssm</module>
+        <packaging>war</packaging>
+      </options>
+    </properties>
+    <root id="root">
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="testssm" />
+        </element>
+      </element>
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/testssm/target/testssm/META-INF/MANIFEST.MF" />
+      </element>
+      <element id="javaee-facet-resources" facet="testssm/web/Web" />
+    </root>
+  </artifact>
+</component>

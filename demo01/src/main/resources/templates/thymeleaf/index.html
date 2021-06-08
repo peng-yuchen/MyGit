@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="www.thymeleaf.org">
+    <head>
+        <link rel="stylesheet" href="bootstrap.css" type="text/css">
+        <meta charset="UTF-8">
+        <title>Title</title>
+    </head>
+    <body>
+        <p th:text="${name2}">hhhh</p>
+        <p th:utext="${name1}">hhhh</p>
+
+        <div th:object="${food}">
+            <p th:text="*{rice}">food</p>
+            <p th:text="*{meat}">food</p>
+        </div>
+
+        <p th:text="${food.meat}">food</p>
+
+        <a href="/json" th:href="@{/welcome}">welcome</a>
+
+        <p th:text="#{something}">message</p>
+    </body>
+</html>
